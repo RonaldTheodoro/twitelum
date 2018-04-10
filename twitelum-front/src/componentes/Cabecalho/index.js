@@ -4,6 +4,8 @@ import './navMenu.css'
 
 class Cabecalho extends Component {
     render() {
+        const usuario = this.props.usuario
+
         return (
             <header className="cabecalho">
                 <div className="cabecalho__container container">
@@ -15,7 +17,7 @@ class Cabecalho extends Component {
                             <li className="navMenu__item">
                                 <a className="navMenu__link">
                                     Bem vindo(a): <br />
-                                    <strong>@fulanodetal</strong>
+                                    <strong>@{usuario}</strong>
                                 </a>
                             </li>
                             <li className="navMenu__item">
