@@ -59,7 +59,7 @@ class Home extends Component {
           <Dashboard posicao="centro">
             <Widget>
               <div className="tweetsArea">
-                { (this.state.tweets.length === 0) ? 'Sem tweets no momento' : this.state.tweets.map(
+                { (this.state.tweets.length === 0) ? 'Nenhum tweet encontrado :(' : this.state.tweets.map(
                     (tweet, index) =>
                       <Tweet key={tweet + index} texto={tweet} />
                   ) }
