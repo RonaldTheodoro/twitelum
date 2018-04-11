@@ -10,8 +10,20 @@ class App extends Component {
   constructor () {
     super()
     this.state = {
-      novoTweet: ''
+      novoTweet: '',
+      tweets: []
     }
+    this.adicionaTweet = this.adicionaTweet.bind(this)
+  }
+
+  adicionaTweet (event) {
+    event.preventDefault()
+    const novoTweet = this.state.novoTweet
+    const tweetsAntigos = this.state.tweets
+    this.setState({
+      tweets: [novoTweet, ...tweetsAntigos],
+      novoTweet: ''
+    })
   }
 
   render () {
@@ -23,11 +35,11 @@ class App extends Component {
         <div className="container">
           <Dashboard>
             <Widget>
-              <form className="novoTweet">
+              <form className="novoTweet" onSubmit={ this.adicionaTweet }>
                 <div className="novoTweet__editorArea">
                   <span className={`novoTweet__status ${ this.state.novoTweet.length > 140 ? 'novoTweet__status--invalido' : '' }` }>
                     { this.state.novoTweet.length }/140
-                    </span>
+                  </span>
                   <textarea
                     value={ this.state.novoTweet }
                     onChange={(event) => {
@@ -47,7 +59,10 @@ class App extends Component {
           <Dashboard posicao="centro">
             <Widget>
               <div className="tweetsArea">
-                <Tweet />
+                { (this.state.tweets.length === 0) ? 'Sem tweets no momento' : this.state.tweets.map(
+                    (tweet, index) =>
+                      <Tweet key={tweet + index} texto={tweet} />
+                  ) }
               </div>
             </Widget>
           </Dashboard>
