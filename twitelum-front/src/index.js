@@ -12,19 +12,14 @@ import './assets/css/notificacao.css'
 import './assets/css/novoTweet.css'
 // import './index.css';
 
-
-import Home from './pages/Home';
-import LoginPage from './pages/LoginPage'
 import registerServiceWorker from './registerServiceWorker';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
+import Router from './router.js'
 
 
 ReactDOM.render(
   <BrowserRouter>
-    <Switch>
-      <Route path="/" exact component={Home}/>
-      <Route path="/login" component={LoginPage}/>
-    </Switch>
+    <Router/>
   </BrowserRouter>,
   document.getElementById('root')
 );
