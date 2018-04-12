@@ -5,17 +5,15 @@ import './loginPage.css'
 
 
 function MensagemErro(props) {
-  if (props.errorMessage) {
+  if (props.errorMessage)
     return (
       <div className="loginPage__errorBox">
         {props.errorMessage}
       </div>
     )
-  } else {
+  else
     return ''
-  }
 }
-
 
 class LoginPage extends Component {
   state = {
@@ -49,18 +47,6 @@ class LoginPage extends Component {
     })
   }
 
-  MensagemErro() {
-    if (this.state.errorMessage)
-      return (
-        <div className="loginPage__errorBox">
-          {this.state.errorMessage}
-        </div>
-      )
-    else
-      return ''
-
-  }
-
   render() {
     return (
       <div className="loginPage">
@@ -76,7 +62,7 @@ class LoginPage extends Component {
                 <label className="loginPage__label" htmlFor="senha">Senha</label>
                 <input ref={(inputSenha) => this.inputSenha = inputSenha} className="loginPage__input" type="password" id="senha" name="senha" />
               </div>
-              <MensagemErro errorMessage={this.state.errorMessage} />
+              <MensagemErro errorMessage={this.state.errorMessage}/>
               <div className="loginPage__inputWrap">
                 <button className="loginPage__btnLogin" type="submit">
                   Logar
