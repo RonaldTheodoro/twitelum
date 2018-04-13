@@ -83,7 +83,7 @@ class Home extends Component {
                 {this.state.tweets.length === 0 ?
                   'Nenhum tweet encontrado :(' : ''}
                 {this.state.tweets.map((tweet, index) =>
-                  <Tweet key={tweet + index} texto={tweet.conteudo} tweetInfo={tweet} />
+                  <Tweet key={tweet._id} tweetInfo={tweet} />
                 )}
               </div>
             </Widget>
