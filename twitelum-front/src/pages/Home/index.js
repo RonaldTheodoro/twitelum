@@ -23,10 +23,20 @@ class Home extends Component {
     event.preventDefault()
     const novoTweet = this.state.novoTweet
     const tweetsAntigos = this.state.tweets
-    this.setState({
-      tweets: [novoTweet, ...tweetsAntigos],
-      novoTweet: ''
-    })
+
+    const token = localStorage.getItem('TOKEN')
+
+    if (novoTweet) {
+      fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${token}`, {
+        method: 'POST',
+        body: JSON.stringify({ conteudo: novoTweet })
+      }).then((response) => response.json())
+        .then((response) => this.setState({
+          tweets: [response, ...tweetsAntigos],
+          novoTweet: ''
+        })
+        )
+    }
   }
 
   render() {
@@ -65,7 +75,7 @@ class Home extends Component {
                 {this.state.tweets.length === 0 ?
                   'Nenhum tweet encontrado :(' : ''}
                 {this.state.tweets.map((tweet, index) =>
-                  <Tweet key={tweet + index} texto={tweet} />
+                  <Tweet key={tweet + index} texto={tweet.conteudo} tweetInfo={tweet} />
                 )}
               </div>
             </Widget>
