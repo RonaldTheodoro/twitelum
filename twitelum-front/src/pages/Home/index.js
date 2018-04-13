@@ -19,6 +19,14 @@ class Home extends Component {
       props.history.push('/login')
   }
 
+  componentDidMount() {
+    const token = localStorage.getItem('TOKEN')
+
+    fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${token}`)
+      .then((response) => response.json())
+      .then((tweets) => this.setState({ tweets }))
+  }
+
   adicionaTweet = (event) => {
     event.preventDefault()
     const novoTweet = this.state.novoTweet
