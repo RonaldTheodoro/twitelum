@@ -58,7 +58,7 @@ class Home extends Component {
             <Widget>
               <form className="novoTweet" onSubmit={this.adicionaTweet}>
                 <div className="novoTweet__editorArea">
-                  <span className={`novoTweet__status ${this.state.novoTweet.length > 140 ? 'novoTweet__status--invalido' : ''}`}>
+                  <span className={`novoTweet__status ${this.state.novoTweet.length > 140 && 'novoTweet__status--invalido'}`}>
                     {this.state.novoTweet.length}/140
                   </span>
                   <textarea
@@ -80,8 +80,7 @@ class Home extends Component {
           <Dashboard posicao="centro">
             <Widget>
               <div className="tweetsArea">
-                {this.state.tweets.length === 0 ?
-                  'Nenhum tweet encontrado :(' : ''}
+                {this.state.tweets.length === 0 && 'Nenhum tweet encontrado'}
                 {this.state.tweets.map((tweet, index) =>
                   <Tweet key={tweet._id} tweetInfo={tweet} />
                 )}
