@@ -8,6 +8,14 @@
         "senha": "123456"
     },
     {
+        "login": "ronaldtheodoro",
+        "nome": "Ronald",
+        "sobrenome": "Theodoro",
+        "foto": "https://avatars1.githubusercontent.com/u/13393333",
+        "email": "ronaldtheodoro@gmail.com",
+        "senha": "123456"
+    },
+    {
         "login": "artdiniz",
         "nome": "Artur",
         "sobrenome": "Diniz",
