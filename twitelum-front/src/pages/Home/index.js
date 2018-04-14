@@ -47,6 +47,29 @@ class Home extends Component {
     }
   }
 
+  removeTweet = (tweetId) => {
+    const token = localStorage.getItem('TOKEN')
+    const url = `http://localhost:3001/tweets/${tweetId}?X-AUTH-TOKEN=${token}`
+
+    fetch(url, {
+      method: 'DELETE',
+    }).then((response) => response.json())
+      .then((response) => this.setState({
+        tweets: this.state.tweets.filter(tweet => tweet._id !== tweetId)
+      }))
+    /*
+    this.runFetch(url, { method: 'DELETE' }, (response) => this.setState({
+      tweets: this.state.tweets.filter(tweet => tweet._id !== tweetId)
+    }))
+    */
+  }
+
+  runFetch = (url, data, func) => {
+    fetch(url, data)
+      .then((response) => response.json())
+      .then((response) => func(response))
+  }
+
   render() {
     return (
       <Fragment>
@@ -82,7 +105,7 @@ class Home extends Component {
               <div className="tweetsArea">
                 {this.state.tweets.length === 0 && 'Nenhum tweet encontrado'}
                 {this.state.tweets.map((tweet, index) =>
-                  <Tweet key={tweet._id} tweetInfo={tweet} />
+                  <Tweet key={tweet._id} removeHandler={() => this.removeTweet(tweet._id)} tweetInfo={tweet} />
                 )}
               </div>
             </Widget>
