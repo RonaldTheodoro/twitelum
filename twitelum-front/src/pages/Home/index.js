@@ -5,13 +5,16 @@ import Dashboard from '../../components/Dashboard'
 import Widget from '../../components/Widget'
 import TrendsArea from '../../components/TrendsArea'
 import Tweet from '../../components/Tweet'
+import Modal from '../../components/Modal'
+
 
 class Home extends Component {
   constructor(props) {
     super()
     this.state = {
       novoTweet: '',
-      tweets: []
+      tweets: [],
+      tweetAtivo: {}
     }
     // this.adicionaTweet = this.adicionaTweet.bind(this)
 
@@ -55,13 +58,34 @@ class Home extends Component {
       method: 'DELETE',
     }).then((response) => response.json())
       .then((response) => this.setState({
-        tweets: this.state.tweets.filter(tweet => tweet._id !== tweetId)
+        tweets: this.state.tweets.filter(tweet => tweet._id !== tweetId),
+        tweetAtivo: {}
       }))
     /*
     this.runFetch(url, { method: 'DELETE' }, (response) => this.setState({
       tweets: this.state.tweets.filter(tweet => tweet._id !== tweetId)
     }))
     */
+  }
+
+  abreModalParaTweet = (event, tweetId) => {
+    const isTweetFooter = event.target.closest('.tweet__footer')
+
+    if (isTweetFooter)
+      return false
+
+    this.setState({
+      tweetAtivo: this.state.tweets.find(tweet => tweet._id === tweetId)
+    })
+  }
+
+  fechaModal = (event) => {
+    const isModal = event.target.closest('.widget')
+
+    if (!isModal)
+      this.setState({
+        tweetAtivo: {}
+      })
   }
 
   runFetch = (url, data, func) => {
@@ -105,12 +129,25 @@ class Home extends Component {
               <div className="tweetsArea">
                 {this.state.tweets.length === 0 && 'Nenhum tweet encontrado'}
                 {this.state.tweets.map((tweet, index) =>
-                  <Tweet key={tweet._id} removeHandler={() => this.removeTweet(tweet._id)} tweetInfo={tweet} />
+                  <Tweet
+                    key={tweet._id}
+                    removeHandler={() => this.removeTweet(tweet._id)}
+                    handleAbreModalParaTweet={(event) => this.abreModalParaTweet(event, tweet._id)}
+                    tweetInfo={tweet} />
                 )}
               </div>
             </Widget>
           </Dashboard>
         </div>
+        <Modal fechaModal={this.fechaModal} isAberto={!!this.state.tweetAtivo._id}>
+          <Widget>
+            <Tweet
+              key={this.state.tweetAtivo._id}
+              removeHandler={(event) => this.removeTweet(this.state.tweetAtivo._id)}
+              handleAbreModalParaTweet={(event) => this.abreModalParaTweet(event, this.state.tweetAtivo._id)}
+              tweetInfo={this.state.tweetAtivo} />
+          </Widget>
+        </Modal>
       </Fragment>
     )
   }

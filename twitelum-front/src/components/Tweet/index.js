@@ -9,7 +9,7 @@ class Tweet extends Component {
     super()
     this.state = {
       likeado: props.tweetInfo.likeado,
-      totalLikes: props.tweetInfo.totalLikes
+      totalLikes: props.tweetInfo.totalLikes,
     }
   }
 
@@ -28,7 +28,7 @@ class Tweet extends Component {
 
   render() {
     return (
-      <article className="tweet">
+      <article className="tweet" onClick={this.props.handleAbreModalParaTweet}>
         <div className="tweet__cabecalho">
           <img className="tweet__fotoUsuario" src={this.props.tweetInfo.usuario.foto} alt="" />
           <span className="tweet__nomeUsuario">
@@ -55,6 +55,7 @@ class Tweet extends Component {
             </svg>
             {this.state.totalLikes}
           </button>
+          
           {this.props.tweetInfo.removivel &&
             <button onClick={this.props.removeHandler} className="btn btn--blue btn--remove">X</button>}
         </footer>
@@ -65,6 +66,8 @@ class Tweet extends Component {
 
 Tweet.propTypes = {
   removeHandler: PropTypes.func.isRequired,
+  handleAbreModalParaTweet: PropTypes.func,
+  tweetInModal: PropTypes.bool,
   tweetInfo: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     likeado: PropTypes.bool.isRequired,
