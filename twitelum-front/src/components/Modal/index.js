@@ -11,13 +11,10 @@ class Modal extends Component {
 
   render() {
     return (
-      <div className={`modal ${this.props.isAberto ? 'modal--active' : ''}`} onClick={this.props.fechaModal}>
-        {
-          this.props.isAberto &&
-          <div className="modal__wrap">
-            {this.props.children}
-          </div>
-        }
+      <div className={`modal ${this.props.isAberto && 'modal--active'}`} onClick={this.props.fechaModal}>
+        <div className="modal__wrap">
+          {this.props.isAberto && this.props.children}
+        </div>
       </div>
     )
   }
