@@ -15,12 +15,16 @@ import './assets/css/novoTweet.css'
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter } from 'react-router-dom'
 import Router from './router.js'
+import { Provider } from 'react-redux'
+import store from './store'
 
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Router/>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 registerServiceWorker();

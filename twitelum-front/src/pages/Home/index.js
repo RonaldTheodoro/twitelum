@@ -1,4 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
+
 import Cabecalho from '../../components/Cabecalho'
 import NavMenu from '../../components/NavMenu'
 import Dashboard from '../../components/Dashboard'
@@ -9,6 +11,10 @@ import Modal from '../../components/Modal'
 
 
 class Home extends Component {
+  static contextTypes = {
+    store: PropTypes.object.isRequired
+  }
+
   constructor(props) {
     super()
     this.state = {
@@ -22,12 +28,23 @@ class Home extends Component {
       props.history.push('/login')
   }
 
+  componentWillMount() {
+    this.context.store.subscribe(() => {
+      this.setState({
+        tweets: this.context.store.getState()
+      })
+    })
+  }
+
   componentDidMount() {
     const token = localStorage.getItem('TOKEN')
 
     fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${token}`)
       .then((response) => response.json())
-      .then((tweets) => this.setState({ tweets }))
+      .then((tweets) => {
+        this.context.store.dispatch({ type: 'CARREGA_TWEETS', tweets: tweets })
+        // this.setState({ tweets })
+      })
   }
 
   adicionaTweet = (event) => {
@@ -69,9 +86,10 @@ class Home extends Component {
   }
 
   abreModalParaTweet = (event, tweetId) => {
+    const isTweetHeader = event.target.closest('.tweet__cabecalho')
     const isTweetFooter = event.target.closest('.tweet__footer')
 
-    if (isTweetFooter)
+    if (isTweetHeader || isTweetFooter)
       return false
 
     this.setState({
