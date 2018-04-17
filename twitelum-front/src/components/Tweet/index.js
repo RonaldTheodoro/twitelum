@@ -69,15 +69,15 @@ Tweet.propTypes = {
   handleAbreModalParaTweet: PropTypes.func,
   tweetInModal: PropTypes.bool,
   tweetInfo: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    likeado: PropTypes.bool.isRequired,
-    totalLikes: PropTypes.number.isRequired,
+    _id: PropTypes.string, // .isRequired,
+    likeado: PropTypes.bool, // .isRequired,
+    totalLikes: PropTypes.number, // .isRequired,
     removivel: PropTypes.bool,
     usuario: PropTypes.shape({
       foto: PropTypes.string.isRequired,
       login: PropTypes.string.isRequired,
       nome: PropTypes.string.isRequired
-    }).isRequired
+    }), // .isRequired
   }).isRequired
 }
 
