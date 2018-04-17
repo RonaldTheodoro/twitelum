@@ -8,6 +8,7 @@ import Widget from '../../components/Widget'
 import TrendsArea from '../../components/TrendsArea'
 import Tweet from '../../components/Tweet'
 import Modal from '../../components/Modal'
+import * as TweetsAPI from '../../apis/TweetsAPI'
 
 
 class Home extends Component {
@@ -37,34 +38,15 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const token = localStorage.getItem('TOKEN')
-
-    fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${token}`)
-      .then((response) => response.json())
-      .then((tweets) => {
-        this.context.store.dispatch({ type: 'CARREGA_TWEETS', tweets: tweets })
-        // this.setState({ tweets })
-      })
+    this.context.store.dispatch(TweetsAPI.carrega())
   }
 
   adicionaTweet = (event) => {
     event.preventDefault()
     const novoTweet = this.state.novoTweet
-    const tweetsAntigos = this.state.tweets
 
-    const token = localStorage.getItem('TOKEN')
-
-    if (novoTweet) {
-      fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${token}`, {
-        method: 'POST',
-        body: JSON.stringify({ conteudo: novoTweet })
-      }).then((response) => response.json())
-        .then((response) => this.setState({
-          tweets: [response, ...tweetsAntigos],
-          novoTweet: ''
-        })
-        )
-    }
+    this.context.store.dispatch(TweetsAPI.adiciona(novoTweet))
+    this.setState({ novoTweet: '' })
   }
 
   removeTweet = (tweetId) => {
@@ -78,11 +60,6 @@ class Home extends Component {
         tweets: this.state.tweets.filter(tweet => tweet._id !== tweetId),
         tweetAtivo: {}
       }))
-    /*
-    this.runFetch(url, { method: 'DELETE' }, (response) => this.setState({
-      tweets: this.state.tweets.filter(tweet => tweet._id !== tweetId)
-    }))
-    */
   }
 
   abreModalParaTweet = (event, tweetId) => {
@@ -101,15 +78,7 @@ class Home extends Component {
     const isModal = event.target.closest('.widget')
 
     if (!isModal)
-      this.setState({
-        tweetAtivo: {}
-      })
-  }
-
-  runFetch = (url, data, func) => {
-    fetch(url, data)
-      .then((response) => response.json())
-      .then((response) => func(response))
+      this.setState({ tweetAtivo: {} })
   }
 
   render() {
