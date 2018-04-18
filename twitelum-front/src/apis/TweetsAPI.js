@@ -27,9 +27,8 @@ export const adiciona = (novoTweet) => {
 export const remove = (tweetId) => {
   return (dispatch) => {
     const token = localStorage.getItem('TOKEN')
-    const url = `http://localhost:3001/tweets/${tweetId}?X-AUTH-TOKEN=${token}`
 
-    fetch(url, {
+    fetch(`http://localhost:3001/tweets/${tweetId}?X-AUTH-TOKEN=${token}`, {
       method: 'DELETE',
     }).then((response) => response.json())
       .then(() => dispatch({ type: 'REMOVE_TWEET', tweetId: tweetId }))
