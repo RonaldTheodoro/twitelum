@@ -23,7 +23,6 @@ class Tweet extends Component {
     const url = `http://localhost:3001/tweets/${tweetId}/like?X-AUTH-TOKEN=${token}`
     fetch(url, { method: 'POST' })
       .then(response => response.json())
-      .then(response => console.log(response))
   }
 
   render() {
