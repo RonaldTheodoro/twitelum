@@ -8,6 +8,9 @@ function tweetsReducer(state = [], action = {}) {
   if (action.type === 'ADICIONA_TWEET')
     return [action.tweet, ...state]
 
+  if (action.type === 'REMOVE_TWEET')
+    return state.filter((tweet) => tweet._id !== action.tweetId)
+
   return state
 }
 

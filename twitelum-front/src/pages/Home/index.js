@@ -50,16 +50,8 @@ class Home extends Component {
   }
 
   removeTweet = (tweetId) => {
-    const token = localStorage.getItem('TOKEN')
-    const url = `http://localhost:3001/tweets/${tweetId}?X-AUTH-TOKEN=${token}`
-
-    fetch(url, {
-      method: 'DELETE',
-    }).then((response) => response.json())
-      .then((response) => this.setState({
-        tweets: this.state.tweets.filter(tweet => tweet._id !== tweetId),
-        tweetAtivo: {}
-      }))
+    this.context.store.dispatch(TweetsAPI.remove(tweetId))
+    this.setState({ tweetAtivo: {} })
   }
 
   abreModalParaTweet = (event, tweetId) => {
