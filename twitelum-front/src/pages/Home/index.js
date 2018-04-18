@@ -6,7 +6,7 @@ import NavMenu from '../../components/NavMenu'
 import Dashboard from '../../components/Dashboard'
 import Widget from '../../components/Widget'
 import TrendsArea from '../../components/TrendsArea'
-import Tweet from '../../components/Tweet'
+import Tweet from '../../containers/TweetPadrao'
 import Modal from '../../components/Modal'
 import * as TweetsAPI from '../../apis/TweetsAPI'
 
@@ -49,10 +49,12 @@ class Home extends Component {
     this.setState({ novoTweet: '' })
   }
 
+  /* 
   removeTweet = (tweetId) => {
     this.context.store.dispatch(TweetsAPI.remove(tweetId))
     this.setState({ tweetAtivo: {} })
   }
+  */
 
   abreModalParaTweet = (event, tweetId) => {
     const isTweetHeader = event.target.closest('.tweet__cabecalho')
@@ -110,7 +112,6 @@ class Home extends Component {
                 {this.state.tweets.map((tweet, index) =>
                   <Tweet
                     key={tweet._id}
-                    removeHandler={() => this.removeTweet(tweet._id)}
                     handleAbreModalParaTweet={(event) => this.abreModalParaTweet(event, tweet._id)}
                     tweetInfo={tweet} />
                 )}

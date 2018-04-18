@@ -64,7 +64,7 @@ class Tweet extends Component {
 }
 
 Tweet.propTypes = {
-  removeHandler: PropTypes.func.isRequired,
+  removeHandler: PropTypes.func, // .isRequired,
   handleAbreModalParaTweet: PropTypes.func,
   tweetInModal: PropTypes.bool,
   tweetInfo: PropTypes.shape({
