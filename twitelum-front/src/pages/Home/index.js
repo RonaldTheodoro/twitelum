@@ -23,7 +23,6 @@ class Home extends Component {
       tweets: [],
       tweetAtivo: {}
     }
-    // this.adicionaTweet = this.adicionaTweet.bind(this)
 
     if (!localStorage.getItem('TOKEN'))
       props.history.push('/login')
@@ -32,7 +31,8 @@ class Home extends Component {
   componentWillMount() {
     this.context.store.subscribe(() => {
       this.setState({
-        tweets: this.context.store.getState()
+        tweets: this.context.store.getState().lista,
+        tweetAtivo: this.context.store.getState().tweetAtivo
       })
     })
   }
@@ -49,30 +49,18 @@ class Home extends Component {
     this.setState({ novoTweet: '' })
   }
 
-  /* 
-  removeTweet = (tweetId) => {
-    this.context.store.dispatch(TweetsAPI.remove(tweetId))
-    this.setState({ tweetAtivo: {} })
-  }
-  */
-
   abreModalParaTweet = (event, tweetId) => {
-    const isTweetHeader = event.target.closest('.tweet__cabecalho')
-    const isTweetFooter = event.target.closest('.tweet__footer')
+    const ignoraModal = event.target.closest('.ignoraModal')
 
-    if (isTweetHeader || isTweetFooter)
-      return false
-
-    this.setState({
-      tweetAtivo: this.state.tweets.find(tweet => tweet._id === tweetId)
-    })
+    if (!ignoraModal)
+      this.context.store.dispatch({ type: 'ADD_TWEET_ATIVO', tweetId })
   }
 
   fechaModal = (event) => {
     const isModal = event.target.closest('.widget')
 
     if (!isModal)
-      this.setState({ tweetAtivo: {} })
+      this.context.store.dispatch({type: 'REMOVE_TWEET_ATIVO'})
   }
 
   render() {
