@@ -31,6 +31,9 @@ export const remove = (tweetId) => {
     fetch(`http://localhost:3001/tweets/${tweetId}?X-AUTH-TOKEN=${token}`, {
       method: 'DELETE',
     }).then((response) => response.json())
-      .then(() => dispatch({ type: 'REMOVE_TWEET', tweetId: tweetId }))
+      .then(() => {
+        dispatch({ type: 'REMOVE_TWEET', tweetId: tweetId })
+        dispatch({ type: 'REMOVE_TWEET_ATIVO' })
+      })
   }
 }

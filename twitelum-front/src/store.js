@@ -12,7 +12,7 @@ function tweetsReducer(state = { lista: [], tweetAtivo: {} }, action = {}) {
     const tweetLista = state.lista.filter(
       (tweet) => tweet._id !== action.tweetId
     )
-    return { ...state, lista: tweetLista, tweetAtivo: {} }
+    return { ...state, lista: tweetLista}
   }
 
   if (action.type === 'ADD_TWEET_ATIVO') {
