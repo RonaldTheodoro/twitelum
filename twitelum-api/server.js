@@ -9,7 +9,8 @@ app.listen(port, function() {
     para visualizar acesse: http://localhost:${port}`)
 })
 
-
+/* 
 setInterval(() => {
     http.get('http://twitelum-api.herokuapp.com/')
 }, 240000)
+ */
