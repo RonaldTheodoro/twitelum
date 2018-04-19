@@ -50,10 +50,13 @@ class Home extends Component {
   }
 
   abreModalParaTweet = (event, tweetId) => {
-    const ignoraModal = event.target.closest('.ignoraModal')
+    const tweetCabecalho = event.target.closest('.tweet__cabecalho')
+    const tweetFooter = event.target.closest('.tweet__footer')
 
-    if (!ignoraModal)
-      this.context.store.dispatch({ type: 'ADD_TWEET_ATIVO', tweetId })
+    if (tweetFooter || tweetCabecalho)
+      return false
+
+    this.context.store.dispatch({ type: 'ADD_TWEET_ATIVO', tweetId })
   }
 
   fechaModal = (event) => {
