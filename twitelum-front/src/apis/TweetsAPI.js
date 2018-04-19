@@ -37,3 +37,9 @@ export const remove = (tweetId) => {
       })
   }
 }
+
+export const like = (tweetId) => {
+  return (dispatch) => {
+    dispatch({ type: 'LIKE', tweetId })
+  }
+}
